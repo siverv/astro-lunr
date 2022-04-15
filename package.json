@@ -1,0 +1,13 @@
+{
+  "name": "astro-lunr",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Lunr integration for Astro",
+  "type": "module",
+  "dependencies": {
+    "lunr": "^2.3.9"
+  },
+  "devDependencies": {
+    "rehype": "^12.0.1"
+  }
+}
