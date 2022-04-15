@@ -2,12 +2,16 @@
   "name": "astro-lunr",
   "version": "0.0.1",
   "private": true,
+  "license" : "GPL-3.0",
   "description": "Lunr integration for Astro",
   "type": "module",
-  "dependencies": {
-    "lunr": "^2.3.9"
+  "exports": {
+    "./plugin.mjs": "./plugin.mjs",
+    "./client/lunr.js": "./client/lunr.js",
+    "./server/renderer.js": "./server/renderer.js"
   },
-  "devDependencies": {
+  "dependencies": {
+    "lunr": "^2.3.9",
     "rehype": "^12.0.1"
   }
 }

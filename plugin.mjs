@@ -1,4 +1,3 @@
-import { createFilter } from '@rollup/pluginutils'
 import fs from 'node:fs';
 import path from 'node:path';
 import {rehype} from 'rehype'
@@ -55,31 +54,6 @@ function indexLunrDocuments(canonicalUrl, addToBulk){
     });
 }
 
-
-// function getViteConfiguration(options = {}) {
-// 	var filter = createFilter(["**/pages/**/*.astro"], options.exclude, {});
-// 	return {	
-// 		plugins: [
-// 			{
-// 				enforce: 'pre', // run transforms before other plugins can
-// 				name: "lunr-rollup-plugin",
-// 				transform(code, id) {
-// 					if(!filter(id)) return null;
-// 					const ast = this.parse(code);
-// 					const ext = ast.body.filter(node => node.type === "ExportNamedDeclaration");
-// 					const indexDocumentAst = ext.find(node => node.declaration.declarations.find(n => n.id === "indexDocument"))
-// 					if(!indexDocumentAst) return null;
-// 					console.log("transform", id, indexDocumentAst);
-// 					// const art = this.parse(code);
-// 					// const source = await fs.promises.readFile(id, 'utf8').catch(err => console.log(err));
-// 					// console.log("loaded", id, source);
-// 				}
-// 			}
-// 		],
-// 	};
-// }
-
-
 export default function createPlugin({pathFilter, subDir, documentFilter, initialize, mapDocument, verbose}){
 	let config = {};
 	let pathsToIndex = []
@@ -90,7 +64,7 @@ export default function createPlugin({pathFilter, subDir, documentFilter, initia
 				if(options.command === "dev"){
 					options.addRenderer({
 						name: 'lunr-renderer',
-						serverEntrypoint: '@integrations/astro-lunr/server/renderer.js',
+						serverEntrypoint: 'astro-lunr/server/renderer.js',
 					});
 				}
 			},
@@ -122,7 +96,7 @@ export default function createPlugin({pathFilter, subDir, documentFilter, initia
 						.process(content);
 					if(newDocuments.length > 0) {
 						if(verbose){
-							console.log(`Indexing ${pathname}, found ${newDocuments.length} documents to index`);
+							console.log(`Indexing ${newDocuments.length} doc(s) from ${pathname}`);
 						}
 						fs.writeFileSync(url, String(hyped));
 						newDocuments.forEach(addToIndexMap)
@@ -136,6 +110,7 @@ export default function createPlugin({pathFilter, subDir, documentFilter, initia
 					if(mapDocument){
 						documents = documents.map(mapDocument);
 					}
+					fs.mkdirSync(new URL(path.join(subDir || "", index || ""), dir), { recursive: true });
 					fs.writeFileSync(new URL(path.join(subDir || "", index || "", 'idx.json'), dir), JSON.stringify(idx));
 					fs.writeFileSync(new URL(path.join(subDir || "", index || "", 'docs.json'), dir), JSON.stringify(documents));
 				}
