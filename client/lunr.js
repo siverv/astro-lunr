@@ -1,15 +1,16 @@
 import lunr from 'lunr';
 
 const LUNR_DIR = import.meta.env.PUBLIC_LUNR_DIR || "";
+const BASE_URL = import.meta.env.PUBLIC_BASE_URL || "/";
 
 function join(...path){
-	return path.filter(Boolean).join("/");
+	return path.filter(Boolean).join("/").replace(/\/+/g, "/");
 }
 
 let idxMap = new Map();
 export async function getIndex(index = ""){
 	if(!idxMap.has(index)){
-		let response = await fetch(join(LUNR_DIR, index, "idx.json"));
+		let response = await fetch(join(BASE_URL, LUNR_DIR, index, "idx.json"));
 		if(response.status !== 200){
 			throw new Error(`Astro-lunr: idx.json not found for index=${index}`);
 		}
@@ -22,7 +23,7 @@ export async function getIndex(index = ""){
 let docMap = new Map();
 export async function getDocs(index = ""){
 	if(!docMap.has(index)){
-		let response = await fetch(join(LUNR_DIR, index, "docs.json"));
+		let response = await fetch(join(BASE_URL, LUNR_DIR, index, "docs.json"));
 		if(response.status !== 200){
 			throw new Error(`Astro-lunr: docs.json not found for index=${index}`);
 		}
