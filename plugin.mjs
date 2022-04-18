@@ -57,7 +57,7 @@ function indexLunrDocuments(canonicalUrl, addToBulk){
 
 export function createVitePlugin({ config }) {
 	return {
-		name: 'astro-lunr:dev-server',
+		name: '@siverv/astro-lunr:dev-server',
 		configureServer(viteServer) {
 			viteServer.middlewares.use((req, res, next) => {
 				if(req.url.endsWith("/idx.json") || req.url.endsWith("/docs.json")){
@@ -96,13 +96,13 @@ export default function createPlugin({pathFilter, subDir, documentFilter, initia
 	let config = {};
 	let pathsToIndex = []
 	return {
-		name: 'lunr-filenames',
+		name: '@siverv/astro-lunr:plugin',
 		hooks: {
 			'astro:config:setup': (options) => {
 				if(options.command === "dev"){
 					options.addRenderer({
-						name: 'lunr-renderer',
-						serverEntrypoint: 'astro-lunr/server/renderer.js',
+						name: '@siverv/astro-lunr:renderer',
+						serverEntrypoint: '@siverv/astro-lunr/server/renderer.js',
 					});
 					options.updateConfig({ vite: getViteConfiguration(options) });
 				}

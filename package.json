@@ -1,10 +1,22 @@
 {
-  "name": "astro-lunr",
+  "name": "@siverv/astro-lunr",
   "version": "0.0.1",
   "private": true,
   "license" : "GPL-3.0",
   "description": "Lunr integration for Astro",
   "type": "module",
+  "homepage": "https://siverv.github.io/astro-git-view/astro-lunr/",
+  "contributors": [
+    {
+      "name": "Siver K. Volle",
+      "email": "package-json.astro-lunr@siverv.no",
+      "url": "https://www.siverv.no"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siverv/astro-lunr.git"
+  },
   "exports": {
     "./plugin.mjs": "./plugin.mjs",
     "./client/lunr.js": "./client/lunr.js",
