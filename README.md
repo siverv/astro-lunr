@@ -2,9 +2,11 @@
 
 # astro-lunr
 
-[Lunr](https://lunrjs.com) integration for [Astro](https://astro.build/).
+[Lunr](https://lunrjs.com) integration for [Astro](https://astro.build/); client-side search for statically hosted pages. 
 
-See example usage in [astro-git-view](https://github.com/siverv/astro-git-view)
+[Demo through the search-bar for astro-git-view hosted on Github Pages](https://siverv.github.io/astro-git-view/astro-lunr/)
+
+See example of usage in [astro-git-view's source code](https://github.com/siverv/astro-git-view)
 
 ## Usage
 

@@ -1,7 +1,6 @@
 {
   "name": "@siverv/astro-lunr",
   "version": "0.0.1",
-  "private": true,
   "license" : "GPL-3.0",
   "description": "Lunr integration for Astro",
   "type": "module",
