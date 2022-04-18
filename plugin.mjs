@@ -54,6 +54,44 @@ function indexLunrDocuments(canonicalUrl, addToBulk){
     });
 }
 
+
+export function createVitePlugin({ config }) {
+	return {
+		name: 'astro-lunr:dev-server',
+		configureServer(viteServer) {
+			viteServer.middlewares.use((req, res, next) => {
+				if(req.url.endsWith("/idx.json") || req.url.endsWith("/docs.json")){
+					let path = req.url.slice(1);
+					if(config.base && config.base != "./"){
+						let base = config.base.startsWith("./") ? config.base.slice(2) : config.base;
+						path = path.replace(base, "./");
+					}
+					let preBuiltPath = new URL(path, config.outDir);
+					try {
+					    var stat = fs.statSync(preBuiltPath);
+					} catch(err){
+						err.message = "Could not find pre-built lunr-files - search is not available without first building your astro-pages at least once. "  + err.toString();
+						throw err;
+					}
+				    res.writeHead(200, {
+				        'Content-Type': 'application/json',
+				        'Content-Length': stat.size
+				    });
+				    return fs.createReadStream(preBuiltPath).pipe(res);
+				}
+				return next();
+			});
+		},
+	};
+}
+
+function getViteConfiguration(config) {
+	return {
+		plugins: [createVitePlugin(config)]
+	};
+}
+
+
 export default function createPlugin({pathFilter, subDir, documentFilter, initialize, mapDocument, verbose}){
 	let config = {};
 	let pathsToIndex = []
@@ -66,6 +104,7 @@ export default function createPlugin({pathFilter, subDir, documentFilter, initia
 						name: 'lunr-renderer',
 						serverEntrypoint: 'astro-lunr/server/renderer.js',
 					});
+					options.updateConfig({ vite: getViteConfiguration(options) });
 				}
 			},
 			'astro:build:done': async ({pages, dir}) => {

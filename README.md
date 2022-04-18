@@ -100,22 +100,7 @@ search("query", "index")
 
 ### Searching in Dev-mode
 
-Due to the nature of indexing, to properly search in dev-mode, one needs to first build the page at least once to create the index
-
-Furthermore, to make the dev-server accept the index-files, you might need to symbolically link the index-files from the public-folder. These should be included in `.gitignore` or equivalent.
-
-Example of how this is done automatically for `astro-git-view`:
-
-```json
-  "scripts": {
-    "dev": "(ln -s ../dist/lunr ./public/lunr 2> /dev/null || true) && astro dev",
-    "start": "(ln -s ../dist/lunr ./public/lunr 2> /dev/null || true) && astro dev",
-    "build": "(rm ./public/lunr 2> /dev/null || true) && astro build",
-    "preview": "astro preview"
-  },
-``` 
-
-A potential future solution would be to "trick" the dev-server into serving certain files from `./dist` without the end-user needing to think, or by writing the files to both dist and public.
+Due to the nature of indexing, to properly search in dev-mode, one needs to first build the pages at least once to create the index
 
 ### Searching in SSR-mode
 
