@@ -93,7 +93,9 @@ As the two json-files often can be megabytes in size, it is recommended to not
 ### Example
 
 ```js
-import {search, enrich} from 'astro-lunr/client/lunr.js';
+import initializeLunr from 'astro-lunr/client/lunr.js';
+
+const {search, enrich} = initializeLunr({lunrDir: "./lunr"})
 
 search("query", "index")
   .then(enrich)
