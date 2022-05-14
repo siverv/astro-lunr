@@ -33,8 +33,6 @@ pathFilter, subDir, documentFilter, initialize, mapDocument, verbose
 | `mapDocument`    | (Object) => Object  | Transform the documents before storing them in docs.json |
 | `verbose`        | boolean             | Debug log |
 
-If using `subDir` or the astro-config `base`, set the env-variable `PUBLIC_LUNR_DIR` to be `/base/subDir/` 
-
 ### Example from astro-git-view
 
 ```js

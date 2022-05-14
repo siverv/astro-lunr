@@ -61,10 +61,9 @@ export function createVitePlugin({ config }) {
 		configureServer(viteServer) {
 			viteServer.middlewares.use((req, res, next) => {
 				if(req.url.endsWith("/idx.json") || req.url.endsWith("/docs.json")){
-					let path = req.url.slice(1);
-					if(config.base && config.base != "./"){
-						let base = config.base.startsWith("./") ? config.base.slice(2) : config.base;
-						path = path.replace(base, "./");
+					let path = req.url;
+					if(config.base && path.startsWith(config.base)){
+						path = path.replace(config.base, "");
 					}
 					let preBuiltPath = new URL(path, config.outDir);
 					try {
